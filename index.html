@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Gambar Transparan - Dark Mode</title>
+    <style>
+        /* Pengaturan tema Dark Mode pada body */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #121212; /* Warna latar sangat gelap */
+            color: #e0e0e0; /* Warna teks abu-abu terang */
+            margin: 0;
+        }
+        
+        .image-container {
+            /* Latar belakang kontainer sedikit lebih terang dari background utama */
+            background-color: #1e1e1e; 
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6); /* Bayangan lebih gelap */
+            border: 1px solid #333;
+        }
+        
+        img {
+            max-width: 300px;
+            height: auto;
+            display: block;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #3f51b5; /* Warna biru aksen dark mode */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        button:hover {
+            background-color: #5c6bc0; /* Lebih terang saat di-hover */
+        }
+        
+        button:active {
+            transform: scale(0.96); /* Efek klik */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-container">
+        <!-- Memanggil nama file gambar persis seperti yang direferensikan -->
+        <img id="sso.png" alt="Logo SSO Transparan">
+    </div>
+
+    <button id="copyBtn">Copy Gambar</button>
+
+    <script>
+        document.getElementById('copyBtn').addEventListener('click', async () => {
+            const img = document.getElementById('imageToCopy');
+            const src = img.src;
+
+            try {
+                // Mengambil data gambar dan mengubahnya menjadi Blob
+                const response = await fetch(src);
+                const blob = await response.blob();
+
+                // Menggunakan Clipboard API untuk menyalin Blob gambar
+                await navigator.clipboard.write([
+                    new ClipboardItem({
+                        [blob.type]: blob
+                    })
+                ]);
+                
+                alert('Gambar berhasil disalin ke clipboard!');
+            } catch (err) {
+                console.error('Gagal menyalin gambar: ', err);
+                alert('Gagal menyalin gambar. Pastikan Anda membuka file ini menggunakan Local Server (localhost) atau HTTPS.');
+            }
+        });
+    </script>
+</body>
+</html>
