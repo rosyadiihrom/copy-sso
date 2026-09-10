@@ -18,22 +18,48 @@
             margin: 0;
         }
         
-        .image-container {
-            /* Latar belakang kontainer sedikit lebih terang dari background utama */
+        /* Kontainer utama untuk semua konten */
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Kontainer untuk kolom-kolom gambar */
+        .columns-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        /* Kontainer individu untuk setiap gambar */
+        .image-column {
             background-color: #1e1e1e; 
             padding: 20px;
             border-radius: 12px;
-            margin-bottom: 25px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.6); /* Bayangan lebih gelap */
             border: 1px solid #333;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         img {
             max-width: 300px;
             height: auto;
             display: block;
+            margin-bottom: 10px; /* Jarak antara gambar dan label */
         }
         
+        .image-label {
+            font-size: 14px;
+            color: #b0b0b0;
+            margin-bottom: 15px; /* Jarak antara label dan tombol */
+        }
+
         button {
             padding: 12px 24px;
             font-size: 16px;
@@ -58,16 +84,30 @@
 </head>
 <body>
 
-    <div class="image-container">
-        <!-- Memanggil nama file gambar persis seperti yang direferensikan -->
-        <img id="imageToCopy" src="sso.png" alt="Logo SSO Transparan">
+    <div class="content-container">
+        <h1>Copy SSO</h1>
+        
+        <div class="columns-container">
+            <!-- Kolom Gambar 1 -->
+            <div class="image-column">
+                <img id="imageToCopy1" src="sso.png" alt="Logo SSO Transparan 1">
+                <div class="image-label">Logo SSO Transparan (Kolom 1)</div>
+                <button id="copyBtn1">Copy Gambar 1</button>
+            </div>
+
+            <!-- Kolom Gambar 2 (Duplikat) -->
+            <div class="image-column">
+                <img id="imageToCopy2" src="sso2.png" alt="Logo SSO Transparan 2">
+                <div class="image-label">Logo SSO Transparan (Kolom 2)</div>
+                <button id="copyBtn2">Copy Gambar 2</button>
+            </div>
+        </div>
     </div>
 
-    <button id="copyBtn">Copy Gambar</button>
-
     <script>
-        document.getElementById('copyBtn').addEventListener('click', async () => {
-            const img = document.getElementById('imageToCopy');
+        // Fungsi untuk menyalin gambar berdasarkan ID
+        async function copyImageById(imageId) {
+            const img = document.getElementById(imageId);
             const src = img.src;
 
             try {
@@ -82,11 +122,21 @@
                     })
                 ]);
                 
-                alert('Gambar berhasil disalin ke clipboard!');
+                alert(`Gambar ${imageId.slice(-1)} berhasil disalin ke clipboard!`);
             } catch (err) {
                 console.error('Gagal menyalin gambar: ', err);
                 alert('Gagal menyalin gambar. Pastikan Anda membuka file ini menggunakan Local Server (localhost) atau HTTPS.');
             }
+        }
+
+        // Event listener untuk tombol copy 1
+        document.getElementById('copyBtn1').addEventListener('click', () => {
+            copyImageById('imageToCopy1');
+        });
+
+        // Event listener untuk tombol copy 2
+        document.getElementById('copyBtn2').addEventListener('click', () => {
+            copyImageById('imageToCopy2');
         });
     </script>
 </body>
