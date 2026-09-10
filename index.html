@@ -12,10 +12,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh; /* Ubah dari height ke min-height agar bisa di-scroll jika konten melebihi layar */
             background-color: #121212; /* Warna latar sangat gelap */
             color: #e0e0e0; /* Warna teks abu-abu terang */
             margin: 0;
+            padding: 20px; /* Tambahan padding agar tidak menempel di ujung layar HP */
+            box-sizing: border-box;
         }
         
         /* Kontainer utama untuk semua konten */
@@ -24,14 +26,17 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            width: 100%;
         }
 
         /* Kontainer untuk kolom-kolom gambar */
         .columns-container {
             display: flex;
-            flex-direction: row;
+            flex-direction: row; /* Posisi horizontal untuk layar besar */
             gap: 20px;
             margin-bottom: 25px;
+            width: 100%;
+            justify-content: center;
         }
 
         /* Kontainer individu untuk setiap gambar */
@@ -45,10 +50,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
+            max-width: 320px; /* Batasi maksimal lebar kotak */
+            box-sizing: border-box;
         }
         
         img {
-            max-width: 300px;
+            width: 100%; /* Gambar menyesuaikan lebar kotak */
+            max-width: 250px;
             height: auto;
             display: block;
             margin-bottom: 10px; /* Jarak antara gambar dan label */
@@ -71,6 +80,8 @@
             border-radius: 8px;
             transition: background-color 0.3s, transform 0.1s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            width: 100%; /* Tombol menyesuaikan lebar agar mudah dipencet di HP */
+            max-width: 200px;
         }
         
         button:hover {
@@ -79,6 +90,19 @@
         
         button:active {
             transform: scale(0.96); /* Efek klik */
+        }
+
+        /* --- MEDIA QUERY UNTUK LAYAR HP --- */
+        @media (max-width: 768px) {
+            .columns-container {
+                flex-direction: column; /* Ubah posisi menjadi vertikal (atas-bawah) */
+                align-items: center;
+            }
+
+            body {
+                justify-content: flex-start; /* Mencegah konten terpotong di bagian atas saat layar terlalu kecil */
+                padding-top: 40px;
+            }
         }
     </style>
 </head>
